@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>タイピングゲーム</title>
+        <style>
+            body {
+                font-family: 'Arial', sans-serif;
+                background-color: #f0f8ff;
+                color: #333;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+                margin: 0;
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2.5em;
+                color: #4A90E2;
+                margin-bottom: 20px;
+            }
+
+            p {
+                font-size: 1.5em;
+                margin: 10px 0;
+                padding: 10px;
+                border-radius: 8px;
+                transition: background-color 0.3s;
+                display: none;
+                /* 初期は非表示 */
+            }
+
+            p:hover {
+                background-color: #e6f7ff;
+            }
+
+            #mozi {
+                font-weight: bold;
+                color: #d35400;
+                border: 2px dashed #d35400;
+                padding: 15px;
+                border-radius: 10px;
+                background-color: #ffffff;
+            }
+
+            #inmozi {
+                color: #27ae60;
+                font-weight: bold;
+            }
+
+            #marubatu {
+                font-size: 1.2em;
+                margin-top: 20px;
+                padding: 10px;
+                border-radius: 8px;
+            }
+
+            #batu {
+                color: #c0392b;
+                font-weight: bold;
+            }
+
+            #end {
+                font-size: 2em;
+                color: #e74c3c;
+                margin-top: 20px;
+            }
+
+            #time {
+            font-size: 2em; /* フォントサイズを大きく */
+            margin-top: 20px;
+            color: #8e44ad;
+            display: none; /* 初期は非表示 */
+            padding: 15px;
+            border: 3px solid #8e44ad; /* ボーダーを追加 */
+            border-radius: 10px;
+            background-color: #f9f9f9; /* 背景色を追加 */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* シャドウを追加 */
+            transition: transform 0.3s; /* アニメーションを追加 */
+        }
+
+            button {
+                font-size: 1.5em;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                background-color: #3498db;
+                color: white;
+                cursor: pointer;
+                transition: background-color 0.3s;
+                margin-top: 20px;
+            }
+
+            button:hover {
+                background-color: #2980b9;
+            }
+        </style>
+
+    </head>
+
+<body>
+    <h1>タイピングゲーム</h1>
+    <p id="mozi" style="display:none"></p>
+    <p id="inmozi" style="display:none"></p>
+    <p id="marubatu" style="display:none"></p>
+    <p id="end" style="display:none" ;>おわりだよー</p>
+    <p id="time"></p>
+    <p id="batu" style="display:none"></p>
+
+    <button onclick="sinstart()" id="buttondesu">スタート</button>
+    <script>
+        //宣言
+        let counter = 0
+        let mondaicounter = 0
+        let currentmondai = 0
+        let batucounter = 0
+        let gamestart = false
+        const startTime = Date.now();
+
+        //問題の中身　
+        const mondai = ["apple", "dog", "inu", "neko", "ringo","you","me","my","shine","ai","result","deth",
+            "none","hi","hello"]
+
+        function
+            start() {
+            //最初の表示処理
+            let buttondayo = document.getElementById("buttondesu")
+            buttondayo.style.display = "none"
+            let end = document.getElementById("end")
+            end.style.display = "none"
+            let marubatu = document.getElementById("marubatu")
+            marubatu.style.display = "none"
+            let inkey = document.getElementById('inmozi')
+            inkey.style.display = "none"
+            let mozihyouzi = document.getElementById("mozi")
+            mozihyouzi.style.display = "block"
+            counter = 0
+            gamestart = true
+            let zikan =document.getElementById("time")
+            zikan.style.display="none"
+
+
+
+
+            //ランダムに問題を取り出し表示
+            const randomIndex = Math.floor(Math.random() * mondai.length);
+            currentmondai = mondai[randomIndex];
+            console.log(currentmondai);
+            let elem = document.getElementById('mozi')
+            elem.textContent = currentmondai
+
+        }
+        //ボタン押された時の処理
+        function sinstart(){
+             nowTime = 0
+            start()
+        }
+
+        //キーボード入力の処理
+        document.addEventListener('keydown', function (event) {
+            if (gamestart == true) {
+
+                console.log(event.key)
+                let inkey = document.getElementById('inmozi')
+                inkey.textContent = event.key
+                inkey.style.display = "block"
+
+
+
+
+                //正誤判定
+                if (currentmondai[counter] == event.key) {
+                    let marubatu = document.getElementById("marubatu")
+                    marubatu.textContent = "あってるよ"
+                    marubatu.style.display = "block"
+                    counter++
+                    //デバッグ用
+                    console.log(counter)
+                } else {
+                    let marubatu = document.getElementById("marubatu")
+                    marubatu.textContent = "違いまーす"
+                    marubatu.style.display = "block"
+                    batucounter++
+                    let matigae = document.getElementById("batu")
+                    matigae.textContent = batucounter
+                    matigae.style.display = "block"
+                    //デバッグ用
+                    console.log(batucounter)
+
+                }
+                //デバッグ用
+                console.log("counter" + counter)
+                console.log("length" + currentmondai.length)
+
+                //問題が終わった時の処理
+                if (counter == currentmondai.length) {
+                    console.log("とりまend");
+                    mondaicounter++
+                    console.log("問題カウンター" + mondaicounter)
+                    start()
+                    if (mondaicounter == 10) {
+                        //時間の表示
+                        nowTime = (Date.now() - startTime) / 1000;
+                        console.log(nowTime)
+                        let zikan = document.getElementById("time")
+                        zikan.style.display = "block"
+                        zikan.textContent = nowTime
+                        //終了時の処理
+                        let end = document.getElementById("end")
+                        end.style.display = "block"
+                        let buttondayo = document.getElementById("buttondesu")
+                        buttondayo.style.display = "block"
+                        mondaicounter = 0
+                        let matigae = document.getElementById("batu")
+                        matigae.style.display = "none"
+                        batucounter = 0
+                        gamestart = false
+                        let mozihyouzi = document.getElementById("mozi")
+                        mozihyouzi.style.display = "none"
+                        
+                        
+
+                    }
+                }
+            }
+        }
+        )
+    </script>
+</body>
+
+</html>
